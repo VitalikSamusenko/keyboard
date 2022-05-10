@@ -45,15 +45,31 @@ const shiftedRU = [
   ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace'],
   ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\', 'Del'],
   ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter'],
-  ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '&#9650;', 'Shift'],
+  ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '/', '&#9650;', 'Shift'],
   ['Ctrl', 'Alt', ' ', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl']
 ];
 
 const shiftedEN = [
   ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace'],
-  ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '}', '}', '\\', 'Del'],
+  ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\\', 'Del'],
   ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '\'', 'Enter'],
   ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '&#9650;', 'Shift'],
+  ['Ctrl', 'Alt', ' ', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl']
+];
+
+const capsedRU = [
+  ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
+  ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\', 'Del'],
+  ['CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter'],
+  ['Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', '&#9650;', 'Shift'],
+  ['Ctrl', 'Alt', ' ', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl']
+];
+
+const capsedEN = [
+  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
+  ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', 'Del'],
+  ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', 'Enter'],
+  ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', '&#9650;', 'Shift'],
   ['Ctrl', 'Alt', ' ', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl']
 ];
 const keyCode = [
@@ -293,14 +309,14 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'CapsLock') {
     qwe += 1;
     if (currentLang === RU && !isCaps) {
-      changeKeyboard(shiftedRU);
+      changeKeyboard(capsedRU);
       isCaps = true;
     } else if (currentLang === RU && isCaps) {
       changeKeyboard(RU);
       isCaps = false;
     }
     if (currentLang === EN && !isCaps) {
-      changeKeyboard(shiftedEN);
+      changeKeyboard(capsedEN);
       isCaps = true;
     } else if (currentLang === EN && isCaps) {
       changeKeyboard(EN);
@@ -373,14 +389,14 @@ buttonsShift.forEach(button => {
 buttonCaps.addEventListener('click', () => {
   buttonCaps.classList.toggle('active');
   if (currentLang === RU && !isCaps) {
-    changeKeyboard(shiftedRU);
+    changeKeyboard(capsedRU);
     isCaps = true;
   } else if (currentLang === RU && isCaps) {
     changeKeyboard(RU);
     isCaps = false;
   }
   if (currentLang === EN && !isCaps) {
-    changeKeyboard(shiftedEN);
+    changeKeyboard(capsedEN);
     isCaps = true;
   } else if (currentLang === EN && isCaps) {
     changeKeyboard(EN);
