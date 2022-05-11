@@ -459,7 +459,6 @@ buttonsShift.forEach(button => {
 
 buttonCaps.addEventListener('click', () => {
   buttonCaps.classList.toggle('active');
-  console.log(isShift);
   if (currentLang === RU) {
     if (!isCaps && !isShift) {
       changeKeyboard(capsedRU);
