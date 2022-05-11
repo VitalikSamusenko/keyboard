@@ -345,19 +345,34 @@ document.addEventListener('keydown', (event) => {
   event.preventDefault();
   if (event.key === 'CapsLock') {
     qwe += 1;
-    if (currentLang === RU && !isCaps) {
-      changeKeyboard(capsedRU);
-      isCaps = true;
-    } else if (currentLang === RU && isCaps) {
-      changeKeyboard(RU);
-      isCaps = false;
-    }
-    if (currentLang === EN && !isCaps) {
-      changeKeyboard(capsedEN);
-      isCaps = true;
-    } else if (currentLang === EN && isCaps) {
-      changeKeyboard(EN);
-      isCaps = false;
+    if (currentLang === RU) {
+      if (!isCaps && !isShift) {
+        changeKeyboard(capsedRU);
+        isCaps = true;
+      } else if (isCaps && !isShift) {
+        changeKeyboard(RU);
+        isCaps = false;
+      } else if (!isCaps && isShift) {
+        changeKeyboard(capsShiftRU);
+        isCaps = true;
+      } else if (isCaps && isShift) {
+        changeKeyboard(shiftedRU);
+        isCaps = false;
+      }
+    } else if (currentLang === EN) {
+      if (!isCaps && !isShift) {
+        changeKeyboard(capsedEN);
+        isCaps = true;
+      } else if (isCaps && !isShift) {
+        changeKeyboard(EN);
+        isCaps = false;
+      } else if (!isCaps && isShift) {
+        changeKeyboard(capsShiftEN);
+        isCaps = true;
+      } else if (isCaps && isShift) {
+        changeKeyboard(shiftedEN);
+        isCaps = false;
+      }
     }
   }
 });
@@ -392,6 +407,7 @@ buttonsShift.forEach(button => {
         buttonA.removeEventListener('click', changeLanguage);
       });
       shiftIsActive = 0;
+      isShift = false;
     }
     buttonsAlt.forEach(buttonA =>{
       buttonA.addEventListener('click', changeLanguage);
@@ -416,6 +432,7 @@ buttonsShift.forEach(button => {
         buttonL.removeEventListener('click', changeCaps);
       });
       shiftIsActive = 0;
+      isShift = false;
     }
     button.classList.add('active');
     if (currentLang === RU && !isCaps) {
@@ -430,7 +447,7 @@ buttonsShift.forEach(button => {
     buttonsLetter.forEach(buttonL => {
       buttonL.addEventListener('click', changeCaps);
     });
-
+    isShift = true;
     shiftIsActive += 1;
     if (shiftIsActive % 2 === 0) {
       changeCaps();
@@ -442,19 +459,35 @@ buttonsShift.forEach(button => {
 
 buttonCaps.addEventListener('click', () => {
   buttonCaps.classList.toggle('active');
-  if (currentLang === RU && !isCaps) {
-    changeKeyboard(capsedRU);
-    isCaps = true;
-  } else if (currentLang === RU && isCaps) {
-    changeKeyboard(RU);
-    isCaps = false;
-  }
-  if (currentLang === EN && !isCaps) {
-    changeKeyboard(capsedEN);
-    isCaps = true;
-  } else if (currentLang === EN && isCaps) {
-    changeKeyboard(EN);
-    isCaps = false;
+  console.log(isShift);
+  if (currentLang === RU) {
+    if (!isCaps && !isShift) {
+      changeKeyboard(capsedRU);
+      isCaps = true;
+    } else if (isCaps && !isShift) {
+      changeKeyboard(RU);
+      isCaps = false;
+    } else if (!isCaps && isShift) {
+      changeKeyboard(capsShiftRU);
+      isCaps = true;
+    } else if (isCaps && isShift) {
+      changeKeyboard(shiftedRU);
+      isCaps = false;
+    }
+  } else if (currentLang === EN) {
+    if (!isCaps && !isShift) {
+      changeKeyboard(capsedEN);
+      isCaps = true;
+    } else if (isCaps && !isShift) {
+      changeKeyboard(EN);
+      isCaps = false;
+    } else if (!isCaps && isShift) {
+      changeKeyboard(capsShiftEN);
+      isCaps = true;
+    } else if (isCaps && isShift) {
+      changeKeyboard(shiftedEN);
+      isCaps = false;
+    }
   }
 });
 
