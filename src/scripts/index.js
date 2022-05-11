@@ -72,6 +72,22 @@ const capsedEN = [
   ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', '&#9650;', 'Shift'],
   ['Ctrl', 'Alt', ' ', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl']
 ];
+
+const capsShiftRU = [
+  ['ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace'],
+  ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '/', 'Del'],
+  ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
+  ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', ',', '&#9650;', 'Shift'],
+  ['Ctrl', 'Alt', ' ', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl']
+];
+const capsShiftEN = [
+  ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace'],
+  ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', '|', 'Del'],
+  ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', '"', 'Enter'],
+  ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?', '&#9650;', 'Shift'],
+  ['Ctrl', 'Alt', ' ', 'Alt', '&#9668;', '&#9660;', '&#9658;', 'Ctrl']
+];
+
 const keyCode = [
   ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace'],
   ['Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete'],
@@ -202,8 +218,7 @@ function createEventListenersFoKeyboard() {
       for (let i = 0; i < keyCode.length; i += 1) {
         for (let j = 0; j < keyCode[i].length; j += 1) {
           if (keyCode[i][j] === event.code) {
-            if ((currentLang === RU && !isCaps && !isShift)
-            || (currentLang === RU && isCaps && isShift)) {
+            if (currentLang === RU && !isCaps && !isShift) {
               insertInCurPos(RU[i][j]);
               cursorPos += 1;
               textArea.focus();
@@ -213,8 +228,7 @@ function createEventListenersFoKeyboard() {
               cursorPos += 1;
               textArea.focus();
               textArea.setSelectionRange(cursorPos, cursorPos);
-            } else if ((currentLang === EN && !isCaps && !isShift)
-            || (currentLang === EN && isCaps && isShift)) {
+            } else if (currentLang === EN && !isCaps && !isShift) {
               insertInCurPos(EN[i][j]);
               cursorPos += 1;
               textArea.focus();
@@ -231,6 +245,16 @@ function createEventListenersFoKeyboard() {
               textArea.setSelectionRange(cursorPos, cursorPos);
             } else if (currentLang === RU && !isCaps && isShift) {
               insertInCurPos(shiftedRU[i][j]);
+              cursorPos += 1;
+              textArea.focus();
+              textArea.setSelectionRange(cursorPos, cursorPos);
+            } else if (currentLang === RU && isCaps && isShift) {
+              insertInCurPos(capsShiftRU[i][j]);
+              cursorPos += 1;
+              textArea.focus();
+              textArea.setSelectionRange(cursorPos, cursorPos);
+            } else if (currentLang === EN && isCaps && isShift) {
+              insertInCurPos(capsShiftEN[i][j]);
               cursorPos += 1;
               textArea.focus();
               textArea.setSelectionRange(cursorPos, cursorPos);
@@ -285,12 +309,12 @@ document.addEventListener('keydown', (event) => {
     if (currentLang === RU && !isCaps) {
       changeKeyboard(shiftedRU);
     } else if (currentLang === RU && isCaps) {
-      changeKeyboard(RU);
+      changeKeyboard(capsShiftRU);
     }
     if (currentLang === EN && !isCaps) {
       changeKeyboard(shiftedEN);
     } else if (currentLang === EN && isCaps) {
-      changeKeyboard(EN);
+      changeKeyboard(capsShiftEN);
     }
     isShift = true;
   }
@@ -340,7 +364,7 @@ document.addEventListener('keydown', (event) => {
 
 // Shift on virtual keyboard
 const buttonsShift = document.querySelectorAll('.keyboard__button_shift');
-
+let shiftIsActive = 0;
 buttonsShift.forEach(button => {
   button.addEventListener('click', () => {
     button.classList.add('active');
@@ -367,6 +391,7 @@ buttonsShift.forEach(button => {
       buttonsAlt.forEach(buttonA =>{
         buttonA.removeEventListener('click', changeLanguage);
       });
+      shiftIsActive = 0;
     }
     buttonsAlt.forEach(buttonA =>{
       buttonA.addEventListener('click', changeLanguage);
@@ -374,7 +399,6 @@ buttonsShift.forEach(button => {
   });
 });
 
-let shiftIsActive = 0;
 buttonsShift.forEach(button => {
   button.addEventListener('click', () => {
     function changeCaps() {
@@ -399,9 +423,9 @@ buttonsShift.forEach(button => {
     } else if (currentLang === EN && !isCaps) {
       changeKeyboard(shiftedEN);
     } else if (currentLang === RU && isCaps) {
-      changeKeyboard(RU);
+      changeKeyboard(capsShiftRU);
     } else if (currentLang === EN && isCaps) {
-      changeKeyboard(EN);
+      changeKeyboard(capsShiftEN);
     }
     buttonsLetter.forEach(buttonL => {
       buttonL.addEventListener('click', changeCaps);
